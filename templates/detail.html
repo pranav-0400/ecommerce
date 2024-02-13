@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock title %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- Product details container -->
+                    <div class="product-details-container">
+                        <!-- Product image -->
+                        <img class="img-fluid product-image" src="{{ object.image.url }}" alt="Product Image" />
+                        
+                        <!-- Product details -->
+                        <div class="product-details text-center">
+                            <!-- Product name -->
+                            <h2 class="product-title fw-bolder">{{ object.title }}</h2>
+                            
+                            <!-- Product price -->
+                            <p class="product-price">
+                                {% if object.discount_price %}
+                                    <del class="text-muted">${{ object.price }}</del>
+                                    <span class="text-danger">${{ object.discount_price }}</span>
+                                    <span class="badge bg-danger">{{ object.get_discount_percent | floatformat:2 }} Off</span>
+                                {% else %}
+                                    <span class="text-dark">${{ object.price }}</span>
+                                {% endif %}
+                            </p>
+                            
+                            <!-- Product description -->
+                            <p class="product-description">{{ object.description }}</p>
+                            
+                            <!-- Product category and label badges -->
+                            <p class="product-badges">
+                                <span class="badge bg-info">{{ object.get_category_display }}</span>
+                                <span class="badge bg-success">{{ object.get_label_display }}</span>
+                            </p>
+                        </div>
+                        
+                        <!-- Product actions -->
+                        <div class="product-actions text-center">
+                            <a class="btn btn-outline-dark me-3" href="{% url 'frontend:home' %}">Continue Shopping</a>
+                            <a class="btn btn-dark" href="{{ item.get_add_to_cart}}">Add to Cart <i class="bi-cart-fill ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
